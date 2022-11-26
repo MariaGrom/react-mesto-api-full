@@ -1,0 +1,6 @@
+.form__text{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: calc(1 / 14 * 17);
+  color: rgba(204, 204, 204, 1);
+}

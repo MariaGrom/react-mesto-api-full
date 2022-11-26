@@ -1,0 +1,10 @@
+.popup__content-photo {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  color: rgba(0, 0, 0, 0.8);
+  align-items: flex-start;
+  position: relative;
+}

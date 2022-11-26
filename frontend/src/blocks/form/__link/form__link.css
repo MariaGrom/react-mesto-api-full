@@ -1,0 +1,9 @@
+.form__link{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: calc(1 / 14 * 17);
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 1)
+}

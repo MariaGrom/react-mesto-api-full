@@ -1,0 +1,7 @@
+.form__title {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: calc(1 / 24 * 29);
+  margin: 0;
+  padding: 0 0 20px;
+}

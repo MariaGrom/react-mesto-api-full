@@ -1,0 +1,15 @@
+.popup__button_disabled {
+  background: rgba(0, 0, 0, 0.2);
+  height: 50px;
+  width: 100%;
+  border-radius: 2px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #000;
+  cursor: pointer;
+}
+
+.popup__button_disabled:disabled {
+  background: rgba(0, 0, 0, 0.2);
+}

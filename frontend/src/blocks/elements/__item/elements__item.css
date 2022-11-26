@@ -1,0 +1,14 @@
+.elements__item {
+  display: flex;
+  width: 100%;
+  max-width: 282px;
+  flex-direction: column;
+  position: relative;
+  min-height: 361px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  border-radius: 10px;
+  list-style-type: none;
+}

@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  max-width: calc(100% - 2 * 200px);
+  height: 74px;
+  align-items: flex-start;
+  padding: 45px 0 0;
+  border-bottom-width: 1px;
+  margin: 0 auto;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(84, 84, 84, 70%);
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1024px) {
+  .header {
+    max-width: calc(100% - 2 * 100px);
+    padding: 28px 0 0;
+  }
+}
+
+@media screen and (max-width: 779px) {
+  .header {
+    max-width: calc(100% - 2 * 27px);
+    height: 56px;
+  }
+}
+
+@media screen and (max-width: 468px) {
+  .header {
+    max-width: 100%;
+  }
+}

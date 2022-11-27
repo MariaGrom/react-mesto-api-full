@@ -16,7 +16,7 @@ node_modules
 .idea
 .vscode
 
-.env.common
+.env
 
 # gitignore с Frontend
 

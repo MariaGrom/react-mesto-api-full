@@ -1,7 +1,11 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+console.log(process.env.NODE_ENV);
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import process from 'process';
+import cors from 'cors';
 import { constants } from 'http2';
 import { errors } from 'celebrate';
 import { userRoutes } from './routes/users.js';
@@ -21,6 +25,9 @@ mongoose.connect('mongodb://localhost:27017/mestodb'); // подключаемс
 
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
+
+app.use(cors());
+app.options('*', cors());
 
 // Подключаем логгер запросов
 app.use(requestLogger);
@@ -60,5 +67,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Запускаем сервер пока на порту 3000!');
+  console.log('Запускаем сервер 3000!');
 });

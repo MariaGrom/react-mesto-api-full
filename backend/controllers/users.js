@@ -7,6 +7,8 @@ import { UnauthorizedError } from '../errors/UnauthorizedError.js';
 import { NotFoundError } from '../errors/NotFoundError.js';
 import { ConflictError } from '../errors/ConflictError.js';
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 // Создаем контроллер POST-запроса для создания нового пользователя с хешированием пароля
 export const createUser = (req, res, next) => {
   const {
@@ -41,7 +43,11 @@ export const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
+      const token = jwt.sign(
+        { _id: user._id }, 
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+         { expiresIn: '7d' }
+         );
       res.send({ token });
     })
     .catch(() => {

@@ -60,5 +60,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Запускаем сервер');
+  console.log('Запускаем сервер пока на порту 3000!');
 });

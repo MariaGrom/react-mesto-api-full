@@ -16,6 +16,8 @@ node_modules
 .idea
 .vscode
 
+.env.common
+
 # gitignore с Frontend
 
 .DS_Store

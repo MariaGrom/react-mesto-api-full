@@ -1,4 +1,4 @@
-export const BASE_URL = ' https://api.mariagrom.mesto.nomoredomains.club';
+export const BASE_URL = ' https://localhost:3000';
 
 function handleResponce(res) {
   if (res.ok) {

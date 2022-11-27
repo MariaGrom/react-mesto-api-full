@@ -14,7 +14,7 @@ import Register from './Register';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from './ProtectedRoute';
-import * as apiAuth from '../utils/apiAuth';
+// import * as apiAuth from '../utils/apiAuth';
 
 function App() {
 
@@ -37,32 +37,32 @@ function App() {
     // Переменная состояния пользователя
     const [currentUser, setCurrentUser] = useState(defaultCurrentUser);
 
-    React.useEffect(() => {
-        if (loggedIn) {
-            api.getUserInfo()
-                .then((data) => {
-                    setCurrentUser({ ...currentUser, ...data })
-                })
-                .catch((err) => {
-                    console.log(err);
-                    openInfoTooltipPopup(false);
-                });
-        }
-    }, [loggedIn]);
+    // React.useEffect(() => {
+    //     if (loggedIn) {
+    //         api.getUserInfo()
+    //             .then((data) => {
+    //                 setCurrentUser({ ...currentUser, ...data })
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err);
+    //                 openInfoTooltipPopup(false);
+    //             });
+    //     }
+    // }, [loggedIn]);
 
-    // Подгружаем данные пользователя и карточки с сервера в функции состояний
-    React.useEffect(() => {
-        if (loggedIn) {
-            api.getAllCards()
-                .then((cards) => {
-                    setCards(cards);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    openInfoTooltipPopup(false);
-                });
-        }
-    }, [loggedIn]);
+    // // Подгружаем данные пользователя и карточки с сервера в функции состояний
+    // React.useEffect(() => {
+    //     if (loggedIn) {
+    //         api.getAllCards()
+    //             .then((cards) => {
+    //                 setCards(cards);
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err);
+    //                 openInfoTooltipPopup(false);
+    //             });
+    //     }
+    // }, [loggedIn]);
 
     // Функция постановки лайков карточке
     function handleCardLike(card) {
@@ -163,19 +163,28 @@ function App() {
     // Функция получения токена
     function checkToken() {
         const token = localStorage.getItem('jwt');
+        api.setToken(token)
         if (token) {
-            apiAuth.checkToken(token)
-                .then((result) => {
-                    if (result && result.data) {
+            Promise.all([api.getUserInfo(), api.getAllCards()])
+                .then(([user, cards]) => {
+                    
+                    if (user && user.data) {
                         setLoggedIn(true);
-                        setCurrentUser({ ...currentUser, email: result.data.email });
+                        setCurrentUser({ ...currentUser, email: user.data.email });
+                        setCards(cards.data);
                         history.push('/');
+                    }else{
+                        setLoggedIn(false);
+                        history.push('/sign-in');
                     }
                 })
                 .catch((err) => {
                     console.log(err);
                     openInfoTooltipPopup(false)
                 })
+        }else{
+            setLoggedIn(false);
+            history.push('/sign-in');
         }
     };
 
@@ -185,7 +194,7 @@ function App() {
 
     // Функция регистрация пользователя 
     function handleRegistration(registrationData) {
-        apiAuth.register(registrationData)
+        api.register(registrationData)
             .then((result) => {
                 if (result && result.data) {
                     openInfoTooltipPopup(true);
@@ -202,7 +211,7 @@ function App() {
 
     //Функция логина пользователя
     function handleLogin(loginData) {
-        apiAuth.login(loginData)
+        api.login(loginData)
             .then((result) => {
                 if (result && result.token) {
                     setCurrentUser({ ...currentUser, email: loginData.email })

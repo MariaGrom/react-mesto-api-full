@@ -4,7 +4,6 @@ class Api {
     this._headers = headers;
   }
 
-
   _handleResponce(res) {
     if (res.ok) {
       return res.json();
@@ -12,19 +11,45 @@ class Api {
     return Promise.reject(res.status);
   }
 
-  // 1. Загрузка информации о пользователе с сервера
+  // Регистрация пользователя 
+  register(data) {
+    return fetch(`${this._url}/signup`,
+      {
+        method: 'POST',
+        headers: this._headers,
+        body: JSON.stringify(data)
+      })
+      .then(this._handleResponce)
+  };
+
+  // Авторизация пользователя
+  login(data) {
+    return fetch(`${this._url}/signin`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+      .then(this._handleResponce)
+  }
+
+  // Установка токена
+  setToken(token) {
+    this._headers.Authorization = `Bearer ${ token }`
+  }
+
+  // Загрузка информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._url}/users/me`, { headers: this._headers })
       .then(this._handleResponce)
   }
 
-  // 2. Загрузка карточек с сервера
+  // Загрузка карточек с сервера
   getAllCards() {
     return fetch(`${this._url}/cards`, { headers: this._headers })
       .then(this._handleResponce)
   }
 
-  // 3. Постановка/снятие лайка
+  // Постановка/снятие лайка
   changeLikeCardStatus(id, isLiked) {
     if (isLiked) {
       return fetch(`${this._url}/cards/${id}/likes`,
@@ -43,7 +68,7 @@ class Api {
     }
   }
 
-  // 4. Удаление карточки
+  // Удаление карточки
   deleteCard(id) {
     return fetch(`${this._url}/cards/${id}`,
       {
@@ -53,7 +78,7 @@ class Api {
       .then(this._handleResponce)
   }
 
-  // 5. Изменение полей пользователя
+  // Изменение полей пользователя
   setUserInfo({ name, about }) {
     return fetch(`${this._url}/users/me`,
       {
@@ -64,7 +89,7 @@ class Api {
       .then(this._handleResponce)
   }
 
-  // 6. Изменение аватара пользователя
+  // Изменение аватара пользователя
   setUserAvatar({ avatar }) {
     return fetch(`${this._url}/users/me/avatar`,
       {
@@ -75,7 +100,7 @@ class Api {
       .then(this._handleResponce)
   }
 
-  // 7. Добавление новой карточки 
+  // Добавление новой карточки 
   createNewCard({ name, link }) {
     return fetch(`${this._url}/cards`,
       {
@@ -88,10 +113,10 @@ class Api {
 }
 
 const api = new Api({
-  url: "https://api.mariagrom.mesto.nomoredomains.club",
+  url: "http://api.mariagrom.mesto.nomoredomains.club",
   headers: {
     "content-type": "application/json",
-    "authorization": "6759dab4-c3f2-490f-91ba-dce1213f320e",
+    "Authorization": "",
   }
 })
 

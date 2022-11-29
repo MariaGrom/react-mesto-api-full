@@ -143,7 +143,6 @@ function App() {
                 .then(([user, cards]) => {
                     
                     if (user && user.data) {
-                        console.log('user', user)
                         setLoggedIn(true);
                         setCurrentUser(user.data);
                         setCards(cards.data);

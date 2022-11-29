@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
-console.log(process.env.NODE_ENV);
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -37,6 +36,13 @@ allowedHeaders:[
 // Подключаем логгер запросов
 app.use(requestLogger);
 
+// Проверка краш-тестами. УДАЛИТЬ после РЕВЬЮ!
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+}); 
+
 // Вызываем роутинг регистрации
 app.post('/signup', userBodyValidator, createUser);
 
@@ -72,5 +78,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Запускаем сервер 3000!');
+  console.log(`Запускаем сервер ${PORT}!`);
 });

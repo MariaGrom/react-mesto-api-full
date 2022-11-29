@@ -14,7 +14,6 @@ import Register from './Register';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from './ProtectedRoute';
-// import * as apiAuth from '../utils/apiAuth';
 
 function App() {
 
@@ -37,37 +36,11 @@ function App() {
     // Переменная состояния пользователя
     const [currentUser, setCurrentUser] = useState(defaultCurrentUser);
 
-    // React.useEffect(() => {
-    //     if (loggedIn) {
-    //         api.getUserInfo()
-    //             .then((data) => {
-    //                 setCurrentUser({ ...currentUser, ...data })
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //                 openInfoTooltipPopup(false);
-    //             });
-    //     }
-    // }, [loggedIn]);
-
-    // // Подгружаем данные пользователя и карточки с сервера в функции состояний
-    // React.useEffect(() => {
-    //     if (loggedIn) {
-    //         api.getAllCards()
-    //             .then((cards) => {
-    //                 setCards(cards);
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //                 openInfoTooltipPopup(false);
-    //             });
-    //     }
-    // }, [loggedIn]);
 
     // Функция постановки лайков карточке
     function handleCardLike(card) {
         // Снова проверяем, есть ли уже лайк на этой карточке
-        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        const isLiked = card.likes.some(i => i === currentUser._id);
         // Отправляем запрос в API и получаем обновлённые данные карточки
         api.changeLikeCardStatus(card._id, !isLiked)
             .then((newCard) => {
@@ -78,6 +51,7 @@ function App() {
                 openInfoTooltipPopup(false);
             });
     };
+
 
     // Функция удаления карточки
     function handleCardDelete(card) {
@@ -169,8 +143,9 @@ function App() {
                 .then(([user, cards]) => {
                     
                     if (user && user.data) {
+                        console.log('user', user)
                         setLoggedIn(true);
-                        setCurrentUser({ ...currentUser, email: user.data.email });
+                        setCurrentUser(user.data);
                         setCards(cards.data);
                         history.push('/');
                     }else{

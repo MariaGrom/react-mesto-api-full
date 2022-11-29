@@ -5,21 +5,16 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 export const auth = (req, res, next) => {
   const { authorization = '' } = req.headers;
-  if (!authorization || !authorization.startsWith('Bearer ')) {
-   return next(new UnauthorizedError('Необходима авторизация'));
-  } 
-
+  if (!authorization) {
+    next(new UnauthorizedError('Необходима авторизация'));
+  } else {
     const token = authorization.replace(/^Bearer*\s*/i, '');
-    let payload;
-
     try {
-      payload = jwt.verify(
-        token,
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'
-        );
+      const decoded = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key');
+      req.user = { _id: decoded._id };
+      next();
     } catch (err) {
       next(new UnauthorizedError('Необходима авторизация'));
     }
-  req.user = payload;
-  return next();
+  }
 };

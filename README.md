@@ -4,3 +4,4 @@
 * IP 158.160.41.66
 * Frontend - https://mariagrom.mesto.nomoredomains.club
 * Backend - https://api.mariagrom.mesto.nomoredomains.club
+* Репозиторий проекта - https://github.com/MariaGrom/react-mesto-api-full

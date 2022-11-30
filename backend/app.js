@@ -1,5 +1,4 @@
 import * as dotenv from 'dotenv';
-dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -12,7 +11,10 @@ import { createUser, login } from './controllers/users.js';
 import { auth } from './middlewares/auth.js';
 import { userBodyValidator, userLoginValidator } from './validators/validators.js';
 import { NotFoundError } from './errors/NotFoundError.js';
-import { requestLogger, errorLogger } from './middlewares/logger.js'
+import { requestLogger, errorLogger } from './middlewares/logger.js';
+
+dotenv.config();
+console.log(process.env.NODE_ENV);
 
 const app = express();
 
@@ -24,13 +26,13 @@ mongoose.connect('mongodb://localhost:27017/mestodb'); // подключаемс
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
 
-// **** nmp КОРС 
+// nmp КОРС
 app.use(cors({
-origin: '*',
-allowedHeaders:[
-  'Content-Type',
-  'Authorization'
-]
+  origin: '*',
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+  ],
 }));
 
 // Подключаем логгер запросов
@@ -41,7 +43,7 @@ app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
-}); 
+});
 
 // Вызываем роутинг регистрации
 app.post('/signup', userBodyValidator, createUser);
@@ -64,7 +66,7 @@ app.all('/*', (req, res, next) => {
 });
 
 // Подключаем логгер ошибок
-app.use(errorLogger); 
+app.use(errorLogger);
 
 // Обработчик ошибок celebrate
 app.use(errors());

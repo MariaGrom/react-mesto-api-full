@@ -10,7 +10,7 @@ export const auth = (req, res, next) => {
   } else {
     const token = authorization.replace(/^Bearer*\s*/i, '');
     try {
-      const decoded = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key');
+      const decoded = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
       req.user = { _id: decoded._id };
       next();
     } catch (err) {

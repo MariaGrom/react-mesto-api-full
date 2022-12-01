@@ -113,7 +113,7 @@ class Api {
 }
 
 const api = new Api({
-  url: "http://api.mariagrom.mesto.nomoredomains.club",
+  url: "https://api.mariagrom.mesto.nomoredomains.club",
   headers: {
     "content-type": "application/json",
     "Authorization": "",

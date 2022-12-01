@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -13,12 +13,14 @@ import { userBodyValidator, userLoginValidator } from './validators/validators.j
 import { NotFoundError } from './errors/NotFoundError.js';
 import { requestLogger, errorLogger } from './middlewares/logger.js';
 
-dotenv.config();
-console.log(process.env.NODE_ENV);
-
 const app = express();
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, NODE_ENV='development' } = process.env;
+
+// Определяем какой секретный ключ выбираем при продакшене
+const config = dotenv.config({path: NODE_ENV === 'production' ? '.env' : '.env.common'}).parsed;
+
+app.set('config', config);
 
 mongoose.set({ runValidators: true });
 mongoose.connect('mongodb://localhost:27017/mestodb'); // подключаемся к базе данных
@@ -31,8 +33,8 @@ app.use(cors({
   origin: '*',
   allowedHeaders: [
     'Content-Type',
-    'Authorization',
-  ],
+    'Authorization'
+  ]
 }));
 
 // Подключаем логгер запросов

@@ -15,10 +15,10 @@ import { requestLogger, errorLogger } from './middlewares/logger.js';
 
 const app = express();
 
-const { PORT = 3000, NODE_ENV='development' } = process.env;
+const { PORT = 3000, NODE_ENV = 'development' } = process.env;
 
 // Определяем какой секретный ключ выбираем при продакшене
-const config = dotenv.config({path: NODE_ENV === 'production' ? '.env' : '.env.common'}).parsed;
+const config = dotenv.config({ path: NODE_ENV === 'production' ? '.env' : '.env.common' }).parsed;
 
 app.set('config', config);
 
@@ -33,8 +33,8 @@ app.use(cors({
   origin: '*',
   allowedHeaders: [
     'Content-Type',
-    'Authorization'
-  ]
+    'Authorization',
+  ],
 }));
 
 // Подключаем логгер запросов

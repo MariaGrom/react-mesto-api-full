@@ -7,7 +7,7 @@ export const auth = (req, res, next) => {
     next(new UnauthorizedError('Необходима авторизация'));
   } else {
     const token = authorization.replace(/^Bearer*\s*/i, '');
-    console.log(token)
+    console.log(token);
     try {
       const { JWT_SECRET } = req.app.get('config');
       const decoded = jwt.verify(token, JWT_SECRET);

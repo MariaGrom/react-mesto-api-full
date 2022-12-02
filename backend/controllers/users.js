@@ -39,7 +39,7 @@ export const createUser = (req, res, next) => {
 // Создаем контроллер логирования пользователя
 export const login = (req, res, next) => {
   const { email, password } = req.body;
-  const { JWT_SECRET } = req.app.get('config')
+  const { JWT_SECRET } = req.app.get('config');
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(

@@ -40,12 +40,12 @@ app.use(cors({
 // Подключаем логгер запросов
 app.use(requestLogger);
 
-// Проверка краш-тестами. УДАЛИТЬ после РЕВЬЮ!
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
+// // Проверка краш-тестами. УДАЛИТЬ после РЕВЬЮ!
+// app.get('/crash-test', () => {
+//   setTimeout(() => {
+//     throw new Error('Сервер сейчас упадёт');
+//   }, 0);
+// });
 
 // Вызываем роутинг регистрации
 app.post('/signup', userBodyValidator, createUser);
